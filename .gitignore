@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.pyc
+
+# raw data, not committed
+data/*.csv
+!data/.gitkeep
+
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+.user.yml
+
+# dagster
+.dagster_home/
+
+# credentials
+*.json
+!package.json
+.env
