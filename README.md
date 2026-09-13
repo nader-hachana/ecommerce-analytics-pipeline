@@ -6,6 +6,8 @@ dbt models on top of BigQuery, built from the Olist Brazilian E-Commerce dataset
 
 See [ANALYSIS.md](ANALYSIS.md) for the actual findings, revenue by category, repeat purchase rate, and how delivery delay relates to review scores.
 
+![Architecture](architecture.png)
+
 ## Stack
 
 - BigQuery

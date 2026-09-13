@@ -21,3 +21,6 @@ dbt/package-lock.concurrent-update-lock
 *.json
 !package.json
 .env
+
+# draw.io autosave
+.$*.drawio.bkp
