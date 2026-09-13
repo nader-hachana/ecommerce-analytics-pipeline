@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from dagster import Definitions
 from dagster_dbt import DbtCliResource
 
@@ -13,6 +11,6 @@ defs = Definitions(
     asset_checks=[fct_order_items_matches_source_grain],
     schedules=[daily_refresh_schedule],
     resources={
-        "dbt": DbtCliResource(project_dir=dbt_project, profiles_dir=str(Path.home() / ".dbt")),
+        "dbt": DbtCliResource(project_dir=dbt_project, profiles_dir=dbt_project.profiles_dir),
     },
 )

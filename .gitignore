@@ -10,10 +10,12 @@ data/*.csv
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
+dbt/package-lock.concurrent-update-lock
 .user.yml
 
 # dagster
 .dagster_home/
+.tmp_dagster_home_*/
 
 # credentials
 *.json
