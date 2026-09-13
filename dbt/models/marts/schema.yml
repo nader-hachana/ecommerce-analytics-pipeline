@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: fct_order_items
+    description: "One row per order line item. order_total_payment_value and review_score are order-level, repeated across every item in the same order."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - order_id
+              - order_item_id
+    columns:
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+      - name: seller_id
+        tests:
+          - relationships:
+              to: ref('dim_sellers')
+              field: seller_id
+      - name: customer_unique_id
+        tests:
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_unique_id
+
+  - name: dim_customers
+    description: "One row per real customer (customer_unique_id), not per order. Location is from their most recent order."
+    columns:
+      - name: customer_unique_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_sellers
+    columns:
+      - name: seller_id
+        tests:
+          - unique
+          - not_null
