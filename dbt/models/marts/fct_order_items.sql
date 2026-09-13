@@ -1,7 +1,6 @@
--- grain: one row per order line item (order_id, order_item_id).
--- order_total_payment_value and review_score are order-level attributes repeated across
--- every item in the same order, sum(price) or sum(price + freight_value) is the right way
--- to get item-level revenue, don't sum order_total_payment_value across an order's items.
+-- one row per order line item (order_id, order_item_id)
+-- order_total_payment_value and review_score repeat across items in the same order
+-- use sum(price) for item-level revenue, not sum(order_total_payment_value)
 
 with order_items as (
     select * from {{ ref('stg_order_items') }}
@@ -15,7 +14,7 @@ customers as (
     select * from {{ ref('stg_customers') }}
 ),
 
--- an order can have multiple payment rows (split payments), aggregate to one row per order first
+-- an order can have several payments (split payments), sum them to one row first
 payments_per_order as (
     select
         order_id,
@@ -31,7 +30,7 @@ primary_payment_type as (
     qualify row_number() over (partition by order_id order by payment_value desc) = 1
 ),
 
--- an order can have more than one review, keep the most recently answered one
+-- an order can have more than one review, keep the latest one
 latest_review as (
     select order_id, review_score
     from {{ ref('stg_order_reviews') }}

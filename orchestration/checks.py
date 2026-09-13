@@ -6,7 +6,7 @@ from orchestration.assets import PROJECT_ID
 
 @asset_check(asset=AssetKey("fct_order_items"))
 def fct_order_items_matches_source_grain():
-    """fct_order_items should have exactly one row per source order item, no fan-out from the payment/review joins."""
+    """fct_order_items should have exactly one row per source order item."""
     client = bigquery.Client(project=PROJECT_ID)
     row = list(
         client.query(f"""

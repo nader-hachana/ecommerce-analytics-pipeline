@@ -11,9 +11,9 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 PROJECT_ID = "project-1bf8476e-c6ef-4205-840"
 RAW_DATASET = "olist_raw"
 
-# table name -> explicit schema, or None to let BigQuery autodetect it.
-# product_category_name_translation needs one because a BOM character in its
-# header breaks autodetect's column naming, see the README.
+# table name -> explicit schema, or None to autodetect
+# product_category_name_translation needs an explicit one, its header has a BOM
+# character that breaks autodetect
 RAW_TABLES = {
     "olist_orders_dataset": None,
     "olist_order_items_dataset": None,
@@ -61,7 +61,7 @@ def raw_olist_tables(context: AssetExecutionContext):
 
 
 class OlistDbtTranslator(DagsterDbtTranslator):
-    """Maps dbt sources onto the raw_olist_tables assets so dbt run depends on the real ingestion step."""
+    """Maps dbt sources onto the raw_olist_tables assets."""
 
     def get_asset_key(self, dbt_resource_props):
         if dbt_resource_props["resource_type"] == "source":

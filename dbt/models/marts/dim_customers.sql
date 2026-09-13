@@ -1,6 +1,5 @@
--- grain: one row per customer_unique_id (the real person, not the per-order customer_id).
--- 122 customers have more than one recorded location; this keeps the location tied to
--- their most recent order rather than picking one arbitrarily.
+-- one row per real customer (customer_unique_id), not per order id
+-- some customers have more than one location, this uses their most recent order
 
 with customers as (
     select * from {{ ref('stg_customers') }}
