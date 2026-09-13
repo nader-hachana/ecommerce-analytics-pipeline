@@ -1,0 +1,12 @@
+services:
+  dagster:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      # dev-only: reuses the host's gcloud/dbt credentials rather than a service account key
+      - ~/.config/gcloud:/root/.config/gcloud:ro
+      - ~/.dbt:/root/.dbt:ro
+      - ../data:/app/data
