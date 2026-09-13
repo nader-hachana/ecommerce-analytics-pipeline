@@ -1,6 +1,6 @@
-# E-Commerce Analytics Platform
+# E-Commerce Analytics Pipeline
 
-[![dbt CI](https://github.com/nader-hachana/ecommerce-analytics-platform/actions/workflows/dbt-ci.yml/badge.svg)](https://github.com/nader-hachana/ecommerce-analytics-platform/actions/workflows/dbt-ci.yml)
+[![dbt CI](https://github.com/nader-hachana/ecommerce-analytics-pipeline/actions/workflows/dbt-ci.yml/badge.svg)](https://github.com/nader-hachana/ecommerce-analytics-pipeline/actions/workflows/dbt-ci.yml)
 
 dbt models on top of BigQuery, built from the Olist Brazilian E-Commerce dataset on Kaggle (~100k orders, 2016-2018). Orchestrated with Dagster, containerized with Docker.
 
