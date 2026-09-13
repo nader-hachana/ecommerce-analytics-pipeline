@@ -1,0 +1,50 @@
+name: dbt CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v3
+
+      - run: uv sync
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/258945241999/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: dbt-ci@project-1bf8476e-c6ef-4205-840.iam.gserviceaccount.com
+
+      - name: Write dbt profile
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << EOF
+          ecommerce_analytics:
+            target: ci
+            outputs:
+              ci:
+                type: bigquery
+                method: service-account
+                project: project-1bf8476e-c6ef-4205-840
+                dataset: olist_dbt
+                location: EU
+                keyfile: $GOOGLE_APPLICATION_CREDENTIALS
+                threads: 4
+          EOF
+
+      - name: dbt deps
+        working-directory: dbt
+        run: uv run --project .. dbt deps
+
+      - name: dbt build
+        working-directory: dbt
+        run: uv run --project .. dbt build
