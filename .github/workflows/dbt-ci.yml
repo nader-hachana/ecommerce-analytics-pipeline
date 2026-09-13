@@ -33,11 +33,10 @@ jobs:
             outputs:
               ci:
                 type: bigquery
-                method: service-account
+                method: oauth
                 project: project-1bf8476e-c6ef-4205-840
                 dataset: olist_dbt
                 location: EU
-                keyfile: $GOOGLE_APPLICATION_CREDENTIALS
                 threads: 4
           EOF
 
