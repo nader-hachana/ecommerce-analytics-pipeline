@@ -1,5 +1,7 @@
 # E-Commerce Analytics Platform
 
+[![dbt CI](https://github.com/nader-hachana/ecommerce-analytics-platform/actions/workflows/dbt-ci.yml/badge.svg)](https://github.com/nader-hachana/ecommerce-analytics-platform/actions/workflows/dbt-ci.yml)
+
 dbt models on top of BigQuery, built from the Olist Brazilian E-Commerce dataset on Kaggle (~100k orders, 2016-2018). Orchestrated with Dagster, containerized with Docker.
 
 See [ANALYSIS.md](ANALYSIS.md) for the actual findings, revenue by category, repeat purchase rate, and how delivery delay relates to review scores.
